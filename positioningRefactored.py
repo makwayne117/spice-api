@@ -9,6 +9,14 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
+@app.after_request
+def after_request(response):
+  response.headers.set('Access-Control-Allow-Origin', '*')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  print("CORS")
+  return response
+
 @app.route('/orbits', methods=['GET'])
 def return_position():
     METAKR = 'getsa.tm'
@@ -32,7 +40,7 @@ def return_position():
 #Endpoint: form_data.
 #Description: a function that processes the requested object and time with spkpos through the form
 @app.route('/form_data', methods=['GET'])
-def return_position():
+def return_position_form():
     METAKR = 'getsa.tm' #Kernel name. getsa.tm is a metakernel that processes the data for the CASSINI misison. Eventually this will work with all missions
     target = request.args.get('planet') #planet: self explanatory
     obs = 'SUN' #for now, all missions will be observed from the reference frame of the sun.
@@ -50,6 +58,11 @@ def return_position():
     print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
 
     return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}) #RETURN COORDINATES IN JSON.
+
+@app.route('/')
+def index():
+    # A welcome message to test our server
+    return "<h1>Welcome to spice-api!</h1>"
 
 #api.add_resource(SpiceCalc, '/orbits')
 
