@@ -29,6 +29,28 @@ def return_position():
 
     return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]})
 
+#Endpoint: form_data.
+#Description: a function that processes the requested object and time with spkpos through the form
+@app.route('/form_data', methods=['GET'])
+def return_position():
+    METAKR = 'getsa.tm' #Kernel name. getsa.tm is a metakernel that processes the data for the CASSINI misison. Eventually this will work with all missions
+    target = request.args.get('planet') #planet: self explanatory
+    obs = 'SUN' #for now, all missions will be observed from the reference frame of the sun.
+    utctim = request.args.get('time') #time: the requested time
+    print(target)
+
+    spiceypy.furnsh(METAKR) #load the kernel.
+    et = spiceypy.str2et(utctim) #CONVERT TIME TO UTC
+    [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
+                                          'LT+S', obs, )
+
+    spiceypy.unload(METAKR)
+
+
+    print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
+
+    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}) #RETURN COORDINATES IN JSON.
+
 #api.add_resource(SpiceCalc, '/orbits')
 
 if __name__ == "__main__":
