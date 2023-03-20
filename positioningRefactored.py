@@ -42,9 +42,9 @@ def return_position():
 @app.route('/form_data', methods=['GET'])
 def return_position_form():
     METAKR = 'getsa.tm' #Kernel name. getsa.tm is a metakernel that processes the data for the CASSINI misison. Eventually this will work with all missions
-    target = request.args.get('planet') #planet: self explanatory
+    target = request.args.get('Planet') #planet: self explanatory
     obs = 'SUN' #for now, all missions will be observed from the reference frame of the sun.
-    utctim = request.args.get('time') #time: the requested time
+    utctim = request.args.get('Time') #time: the requested time
     print(target)
 
     spiceypy.furnsh(METAKR) #load the kernel.
