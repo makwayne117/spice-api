@@ -65,7 +65,7 @@ def brief_parse():
 
     # print out summary of file
 
-    out = subprocess.run(["brief", "kernels/jup068.bsp"], check=True, capture_output=True, text=True).stdout
+    out = subprocess.run(["BRIEF", "kernels/jup068.bsp"], check=True, capture_output=True, text=True).stdout
 
     # convert to string
     c = str(out)
