@@ -3,6 +3,7 @@ from flask import jsonify
 import spiceypy
 from flask_cors import CORS, cross_origin
 from flask_restful import Resource, Api, reqparse
+from subprocess import check_output
 
 
 app = Flask(__name__)
@@ -61,7 +62,7 @@ def return_position_form():
 
 @app.route('/brief_parse', methods=['GET'])
 def brief_parse():
-    from subprocess import check_output
+
     # print out summary of file
     out = check_output(["brief", "kernels/jup068.bsp"])
 
