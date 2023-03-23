@@ -24,6 +24,8 @@ def return_position():
     target = request.args.get('planet')
     utctim = request.args.get('utc')
     obs = 'SUN'
+    if(utctim == None):
+        utctim = "2004 jun 11 19:32:00"
     #utctim = "2004 jun 11 19:32:00"
     print(target)
 
