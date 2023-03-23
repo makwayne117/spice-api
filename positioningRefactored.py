@@ -23,9 +23,8 @@ def return_position():
     METAKR = 'getsa.tm'
     target = request.args.get('planet')
     utctim = request.args.get('utc')
-    if(utctim = None){
+    if(utctim == None):
         utctim = "2004 jun 11 19:32:00
-    }
     obs = 'SUN'
     #utctim = "2004 jun 11 19:32:00"
     print(target)
