@@ -22,8 +22,11 @@ def after_request(response):
 def return_position():
     METAKR = 'getsa.tm'
     target = request.args.get('planet')
+    utctim = request.args.get('utc')
     obs = 'SUN'
-    utctim = "2004 jun 11 19:32:00"
+    if(utctim == None):
+        utctim = "2004 jun 11 19:32:00"
+    #utctim = "2004 jun 11 19:32:00"
     print(target)
 
     spiceypy.furnsh(METAKR)
