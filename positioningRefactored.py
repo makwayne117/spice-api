@@ -60,38 +60,22 @@ def return_position_form():
 
     return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}) #RETURN COORDINATES IN JSON.
 
-@app.route('/brief_parse', methods=['GET'])
-def brief_parse():
-
-    # print out summary of file
-
-    out = subprocess.run(["BRIEF", "kernels/jup068.bsp"], check=True, capture_output=True, text=True).stdout
-
-    # convert to string
-    c = str(out)
-    print(c)
-    # add 7 to start the split to s
-    s = c.find("Bodies")
-    e = c.find("Start")
-
-    # slice the string
-    sp = c[s + 8:e]
-    # remove the n string
-    rn = sp.replace("n", "")
-
-    # remove the \
-    rs = rn.replace("\ ", "")
-
-    # split the string
-    f = rs.split()
-    # empty array
-    arr = []
-    # remove any barycenters and numbers
-    for x in range(len(f)):
-        if (f[x] != "BARYCENTER" and f[x][0] != "("):
-            arr.append(f[x])
-    print(arr)
-    return arr
+@app.route('/get_body', methods=['GET'])
+def getBody():
+    kernel = request.args.get('kernels')  # planet: self explanatory
+    ids = []
+    idso = []
+    bodylist = []
+    # for x in Kernels:
+    #     ids = spiceypy.spkobj(Kernels, idso)
+    #     for i in range(len(ids)):
+    #         body = spiceypy.bodc2n(ids[i])
+    #         bodylist.append(body)
+    ids = spiceypy.spkobj(kernel, idso)
+    for i in range(len(ids)):
+        body = spiceypy.bodc2n(ids[i])
+        bodylist.append(body)
+    return bodylist
 
 
 @app.route('/')
