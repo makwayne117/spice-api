@@ -4,6 +4,7 @@ import spiceypy
 from flask_cors import CORS, cross_origin
 from flask_restful import Resource, Api, reqparse
 import subprocess
+import logging
 
 
 app = Flask(__name__)
