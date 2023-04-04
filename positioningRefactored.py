@@ -32,6 +32,7 @@ def return_position():
     #utctim = "2004 jun 11 19:32:00"
     print(target)
     spiceypy.furnsh(METAKR)
+    utctim = datetime.datetime.now()
     temp = np.array(utctim)
     for i in range(29):
         temp.append(utctim-datetime.timedelta(30))
