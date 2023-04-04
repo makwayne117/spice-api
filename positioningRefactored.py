@@ -20,7 +20,8 @@ def after_request(response):
 
 @app.route('/orbits', methods=['GET'])
 def return_position():
-    METAKR = 'getsa.tm'
+    #METAKR = 'getsa.tm'
+    METAKR = 'ss_kernel.mk'
     target = request.args.get('planet')
     utctim = request.args.get('utc')
     obs = 'SUN'
