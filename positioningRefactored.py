@@ -4,7 +4,6 @@ import spiceypy
 from flask_cors import CORS, cross_origin
 from flask_restful import Resource, Api, reqparse
 import subprocess
-import logging
 
 
 app = Flask(__name__)
@@ -30,12 +29,13 @@ def return_position():
         utctim = "2004 jun 11 19:32:00"
     #utctim = "2004 jun 11 19:32:00"
     print(target)
-    app.logger.warning('testing warning log')
-    app.logger.error('testing error log')
-    app.logger.info('testing info log')
-
     spiceypy.furnsh(METAKR)
-    et = spiceypy.str2et(utctim)
+    et = []
+    for i in range(0,len(utctim)):
+        et.append(spiceypy.str2et(utctim[i]))
+    
+    #spiceypy.furnsh(METAKR)
+    #et = spiceypy.str2et(utctim)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
 
