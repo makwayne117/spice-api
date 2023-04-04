@@ -29,6 +29,9 @@ def return_position():
         utctim = "2004 jun 11 19:32:00"
     #utctim = "2004 jun 11 19:32:00"
     print(target)
+    app.logger.warning('testing warning log')
+    app.logger.error('testing error log')
+    app.logger.info('testing info log')
 
     spiceypy.furnsh(METAKR)
     et = spiceypy.str2et(utctim)
