@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 from flask_restful import Resource, Api, reqparse
 import subprocess
 import numpy as np
+import datetime
 
 
 app = Flask(__name__)
@@ -31,9 +32,12 @@ def return_position():
     #utctim = "2004 jun 11 19:32:00"
     print(target)
     spiceypy.furnsh(METAKR)
-    et = np.empty(10)
-    for i in range(0,len(utctim)):
-        et.append(spiceypy.str2et(utctim[i]))
+    temp = np.array(utctim)
+    for i in range(29):
+        temp.append(utctim-datetime.timedelta(30))
+    et = np.empty(30)
+    for i in range(30):
+        et.append(spiceypy.str2et(temp[i]))
     
     #spiceypy.furnsh(METAKR)
     #et = spiceypy.str2et(utctim)
