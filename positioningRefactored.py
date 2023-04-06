@@ -33,7 +33,7 @@ def return_position():
     print(target)
 
     testUtc = datetime.datetime.now()
-    temp = np.empty(30)
+    temp = np.empty(30,dtype=np.string)
     np.append(temp,testUtc)
     for i in range(0,29):
         np.append(temp,testUtc-datetime.timedelta(i))
