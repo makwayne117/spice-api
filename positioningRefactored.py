@@ -44,6 +44,8 @@ def return_position():
     print("TestEt:", testEt)
     print("Shapes",len(temp),len(testEt))
 
+    print("Spice Results",spiceypy.spkpos(target,testEt,'J2000','LT+S',obs))
+
     #spiceypy.furnsh(METAKR)
     et = spiceypy.str2et(utctim)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
