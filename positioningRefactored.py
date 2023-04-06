@@ -33,8 +33,9 @@ def return_position():
     print(target)
 
     testUtc = datetime.datetime.now()
-    temp = np.array(testUtc)
-    for i in range(29):
+    temp = np.empty(30)
+    np.append(temp,testUtc)
+    for i in range(0,29):
         np.append(temp,testUtc-datetime.timedelta(i))
     print("Temp Times:",temp)
     #testEt = np.empty(len(temp))
