@@ -20,6 +20,32 @@ def after_request(response):
   print("CORS")
   return response
 
+
+@app.route('/pos', methods=['GET'])
+def return_position():
+    #METAKR = 'getsa.tm'
+    METAKR = 'ss_kernel.mk'
+    target = request.args.get('planet')
+    utctim = request.args.get('utc')
+    obs = 'SUN'
+    if(utctim == None):
+        utctim = "2004 jun 11 19:32:00"
+    #utctim = "2004 jun 11 19:32:00"
+    print(target)
+    spiceypy.furnsh(METAKR)
+
+    et = spiceypy.str2et(utctim)
+    
+    spiceypy.unload(METAKR)
+
+    [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
+                                          'LT+S', obs, )
+
+    print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
+    
+    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]})
+
+
 @app.route('/orbits', methods=['GET'])
 def return_position():
     #METAKR = 'getsa.tm'
@@ -44,22 +70,12 @@ def return_position():
     #print("TestEt:", testEt)
     #print("Shapes",len(temp),len(testEt))
 
-    #print("Spice Results",spiceypy.spkpos(target,testEt,'J2000','LT+S',obs))
-
-    #spiceypy.furnsh(METAKR)
-    #et = spiceypy.str2et(utctim)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
-    print("Spice:", return_pos)
-    print("SpiceX:", return_pos[0])
-    print("Spicey:", return_pos[1])
-    print("Spicez:", return_pos[2])
-
-    print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
-
-    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]})
+    #print("Spice:", return_pos)
+    return (return_pos)
 
 #Endpoint: form_data.
 #Description: a function that processes the requested object and time with spkpos through the form
