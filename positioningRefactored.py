@@ -38,9 +38,9 @@ def return_body_position():
 
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
-
+    #moved
     spiceypy.unload(METAKR)
-    
+
     print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
     
     return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]})
