@@ -33,15 +33,14 @@ def return_position():
     print(target)
 
     testUtc = datetime.datetime.now()
-    temp = np.empty(30,dtype=np.string)
-    np.append(temp,testUtc)
-    for i in range(0,29):
-        np.append(temp,testUtc-datetime.timedelta(i))
+    temp = np.array(testUtc,dtype=object)
+    for i in range(29):
+        temp = np.append(temp,testUtc-datetime.timedelta(i))
     print("Temp Times:",temp)
-    #testEt = np.empty(len(temp))
-    #for i in range(0,len(temp)):
-    #    np.append(testEt,spiceypy.str2et(temp[i]))
-    #print("TestEt:", testEt)
+    testEt = np.empty(len(temp))
+    for i in range(0,len(temp)):
+        testEt = np.append(testEt,spiceypy.str2et(temp[i]))
+    print("TestEt:", testEt)
 
     spiceypy.furnsh(METAKR)
     et = spiceypy.str2et(utctim)
