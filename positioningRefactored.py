@@ -40,7 +40,7 @@ def return_position():
     #print("Temp Times:",temp)
     et = np.empty(0)
     for i in range(0,len(temp)):
-        teetstEt = np.append(et,spiceypy.str2et(temp[i]))
+        et = np.append(et,spiceypy.str2et(temp[i]))
     #print("TestEt:", testEt)
     #print("Shapes",len(temp),len(testEt))
 
