@@ -31,6 +31,7 @@ def return_position():
         utctim = "2004 jun 11 19:32:00"
     #utctim = "2004 jun 11 19:32:00"
     print(target)
+    spiceypy.furnsh(METAKR)
 
     testUtc = datetime.datetime.now()
     temp = np.array(testUtc.isoformat(),dtype=object)
@@ -42,7 +43,7 @@ def return_position():
         testEt = np.append(testEt,spiceypy.str2et(temp[i]))
     print("TestEt:", testEt)
 
-    spiceypy.furnsh(METAKR)
+    #spiceypy.furnsh(METAKR)
     et = spiceypy.str2et(utctim)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
