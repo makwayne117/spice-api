@@ -38,11 +38,11 @@ def return_position():
     for i in range(29):
         temp = np.append(temp,(testUtc-datetime.timedelta(i)).isoformat())
     print("Temp Times:",temp)
-    testEt = np.empty(len(temp))
+    testEt = np.empty(0)
     for i in range(0,len(temp)):
-        print(i,temp[i],"spice:",spiceypy.str2et(temp[i]))
         testEt = np.append(testEt,spiceypy.str2et(temp[i]))
     print("TestEt:", testEt)
+    print("Shapes",len(temp),len(testEt))
 
     #spiceypy.furnsh(METAKR)
     et = spiceypy.str2et(utctim)
