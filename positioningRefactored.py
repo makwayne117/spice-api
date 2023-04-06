@@ -22,7 +22,7 @@ def after_request(response):
 
 
 @app.route('/pos', methods=['GET'])
-def return_position():
+def return_body_position():
     #METAKR = 'getsa.tm'
     METAKR = 'ss_kernel.mk'
     target = request.args.get('planet')
