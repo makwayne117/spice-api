@@ -40,6 +40,7 @@ def return_position():
     print("Temp Times:",temp)
     testEt = np.empty(len(temp))
     for i in range(0,len(temp)):
+        print(i,temp[i],"spice:",spiceypy.str2et(temp[i]))
         testEt = np.append(testEt,spiceypy.str2et(temp[i]))
     print("TestEt:", testEt)
 
