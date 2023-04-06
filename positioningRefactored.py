@@ -37,22 +37,25 @@ def return_position():
     temp = np.array(testUtc.isoformat(),dtype=object)
     for i in range(29):
         temp = np.append(temp,(testUtc-datetime.timedelta(i)).isoformat())
-    print("Temp Times:",temp)
-    testEt = np.empty(0)
+    #print("Temp Times:",temp)
+    et = np.empty(0)
     for i in range(0,len(temp)):
-        testEt = np.append(testEt,spiceypy.str2et(temp[i]))
-    print("TestEt:", testEt)
-    print("Shapes",len(temp),len(testEt))
+        teetstEt = np.append(et,spiceypy.str2et(temp[i]))
+    #print("TestEt:", testEt)
+    #print("Shapes",len(temp),len(testEt))
 
-    print("Spice Results",spiceypy.spkpos(target,testEt,'J2000','LT+S',obs))
+    #print("Spice Results",spiceypy.spkpos(target,testEt,'J2000','LT+S',obs))
 
     #spiceypy.furnsh(METAKR)
-    et = spiceypy.str2et(utctim)
+    #et = spiceypy.str2et(utctim)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
-
+    print("Spice:", return_pos)
+    print("SpiceX:", return_pos[0])
+    print("Spicey:", return_pos[1])
+    print("Spicez:", return_pos[2])
 
     print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
 
