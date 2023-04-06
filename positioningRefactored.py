@@ -38,7 +38,7 @@ def return_position():
         np.append(temp,testUtc-datetime.timedelta(i))
     testEt = np.empty(30)
     for i in range(30):
-        np..append(testEt,spiceypy.str2et(temp[i]))
+        np.append(testEt,spiceypy.str2et(temp[i]))
     print("TestEt:", testEt)
 
     spiceypy.furnsh(METAKR)
