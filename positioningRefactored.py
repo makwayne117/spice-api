@@ -53,6 +53,7 @@ def return_position():
     METAKR = 'ss_kernel.mk'
     target = request.args.get('planet')
     utctim = request.args.get('utc')
+    length = request.args.get('length')
     obs = 'SUN'
     if(utctim == None):
         utctim = "2004 jun 11 19:32:00"
@@ -62,7 +63,7 @@ def return_position():
 
     testUtc = datetime.datetime.now()
     temp = np.array(testUtc.isoformat(),dtype=object)
-    for i in range(29):
+    for i in range(length):
         temp = np.append(temp,(testUtc-datetime.timedelta(i)).isoformat())
     #print("Temp Times:",temp)
     et = np.empty(0)
