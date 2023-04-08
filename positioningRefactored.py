@@ -76,7 +76,7 @@ def return_position():
 
     spiceypy.unload(METAKR)
     #print("Spice:", return_pos)
-    return (return_pos.to_list())
+    return (return_pos.tolist())
 
 #Endpoint: form_data.
 #Description: a function that processes the requested object and time with spkpos through the form
