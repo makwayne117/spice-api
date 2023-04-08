@@ -63,7 +63,7 @@ def return_position():
 
     testUtc = datetime.datetime.now()
     temp = np.array(testUtc.isoformat(),dtype=object)
-    for i in range(length):
+    for i in range(int(length)):
         temp = np.append(temp,(testUtc-datetime.timedelta(i)).isoformat())
     #print("Temp Times:",temp)
     et = np.empty(0)
