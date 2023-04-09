@@ -79,6 +79,16 @@ def return_position():
     #print("Spice:", return_pos)
     return (return_pos.tolist())
 
+@app.route('/upload_static_file', methods=['POST'])
+def upload_static_file():
+     print("Got request in static files")
+     print(request.files)
+     f = request.files['static_file']
+     f.save(f.filename)
+     spiceypy.furnsh(f)
+     resp = {"success": True, "response": "file saved!"}
+     return jsonify(resp), 200
+
 #Endpoint: form_data.
 #Description: a function that processes the requested object and time with spkpos through the form
 @app.route('/form_data', methods=['GET'])
