@@ -117,9 +117,10 @@ def return_position():
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
-    #print("Spice:", return_pos)
-    #return (return_pos.tolist())
-    return(return_pos)
+    print("Spice:", return_pos)
+    print("List":return_pos.tolist())
+    return (return_pos.tolist())
+    #return(return_pos)
 
 @app.route('/upload_static_file', methods=['POST'])
 def upload_static_file():
