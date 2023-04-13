@@ -117,9 +117,9 @@ def return_position():
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
-    print("Spice:", return_pos)
+    #print("Spice:", return_pos)
     data = [l.tolist() for l in return_pos]
-    print("List",data)
+    #print("List",data)
     #return (return_pos.tolist())
     return(data)
 
