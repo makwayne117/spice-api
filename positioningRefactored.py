@@ -76,14 +76,15 @@ def return_position():
     obs = 'SUN'
     if(utctim == None):
         utctim = "2004 jun 11 19:32:00"
-    #utctim = "2004 jun 11 19:32:00"
+    utctim = utctim[:-1]
+    utctim = datetime.datetime.fromisoformat(utctim)
     print(target)
     spiceypy.furnsh(METAKR)
 
-    testUtc = datetime.datetime.now()
-    temp = np.array(testUtc.isoformat(),dtype=object)
+    #testUtc = datetime.datetime.now()
+    temp = np.array(utctim.isoformat(),dtype=object)
     for i in range(int(length)):
-        temp = np.append(temp,(testUtc-datetime.timedelta(i)).isoformat())
+        temp = np.append(temp,(utctim-datetime.timedelta(i)).isoformat())
     #print("Temp Times:",temp)
     et = np.empty(0)
     for i in range(0,len(temp)):
