@@ -118,9 +118,10 @@ def return_position():
 
     spiceypy.unload(METAKR)
     print("Spice:", return_pos)
-    print("List",return_pos.tolist())
-    return (return_pos.tolist())
-    #return(return_pos)
+    data = [l.tolist() for l in return_pos]
+    print("List",data)
+    #return (return_pos.tolist())
+    return(data)
 
 @app.route('/upload_static_file', methods=['POST'])
 def upload_static_file():
