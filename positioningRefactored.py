@@ -118,7 +118,7 @@ def return_position():
 
     spiceypy.unload(METAKR)
     print("Spice:", return_pos)
-    print("List":return_pos.tolist())
+    print("List",return_pos.tolist())
     return (return_pos.tolist())
     #return(return_pos)
 
