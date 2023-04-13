@@ -113,7 +113,7 @@ def return_position():
     #print("TestEt:", testEt)
     #print("Shapes",len(temp),len(testEt))
 
-    [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
+    [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000',
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
