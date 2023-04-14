@@ -83,8 +83,8 @@ def return_spacecraft_position(mission):
     et = spiceypy.stret(utctime)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000', 'LT+S', obs)
     spiceypy.unload(kernel_urls)
-    print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
-    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]})
+    print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]}))
+    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]})
 
 
 @app.route('/orbits', methods=['GET'])
@@ -113,15 +113,12 @@ def return_position():
     #print("TestEt:", testEt)
     #print("Shapes",len(temp),len(testEt))
 
-    [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000',
+    [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
     #print("Spice:", return_pos)
-    data = [l.tolist() for l in return_pos]
-    #print("List",data)
-    #return (return_pos.tolist())
-    return(data)
+    return (return_pos.tolist())
 
 @app.route('/upload_static_file', methods=['POST'])
 def upload_static_file():
