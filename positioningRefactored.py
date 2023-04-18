@@ -75,7 +75,7 @@ def return_spacecraft_position():
     kernel_urls = missions[mission]
 
     #Lets add the leapsecond file to the kernel pool
-    kernel_urls.append("../kernels/leap.tls")
+    kernel_urls.append("kernels/leap.tls")
     #Add all kernels to spice and compute data for Voyager 1
     spiceypy.furnsh(kernel_urls)
     target = request.args.get('mission')
