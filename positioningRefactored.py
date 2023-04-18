@@ -70,7 +70,7 @@ def return_spacecraft_position(mission):
    # read missions dictionary from the file
     with open('missions.json', 'r') as f:
         missions = json.load(f)
-
+        print("in missions")
     kernel_urls = missions[mission]
 
     #Lets add the leapsecond file to the kernel pool
