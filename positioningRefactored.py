@@ -81,7 +81,7 @@ def return_spacecraft_position():
     target = request.args.get('mission')
     utctime = request.args.get('utc')
     obs = "SUN"
-    et = spiceypy.stret(utctime)
+    et = spiceypy.str2et(utctime)
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000', 'LT+S', obs)
     spiceypy.unload(kernel_urls)
     print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]}))
