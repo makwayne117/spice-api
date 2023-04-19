@@ -57,13 +57,14 @@ def return_body_position():
 
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
+    
+    spiceypy.bodvrd(target,"RADII",3,dim,radii)
 
     spiceypy.unload(METAKR)
-    #please work
-
+    print("radius",radii)
     print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]}))
     
-    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2]})
+    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "r": radii[0]})
 
 @app.route('/mission', methods=['GET'])
 def return_spacecraft_position():
