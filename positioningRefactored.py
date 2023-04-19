@@ -58,7 +58,9 @@ def return_body_position():
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
     
-    [dim,radii] = spiceypy.bodvrd("EARTH","RADII",3)
+    if ('BARYCENTER' in target):
+        target = target.replace(' BARYCENTER', '')
+    [dim,radii] = spiceypy.bodvrd(target,"RADII",3)
 
     spiceypy.unload(METAKR)
     print("radius",radii)
