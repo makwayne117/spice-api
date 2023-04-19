@@ -58,7 +58,7 @@ def return_body_position():
     [return_pos, ltime] = spiceypy.spkpos(target, et, 'J2000',
                                           'LT+S', obs, )
     
-    spiceypy.bodvrd(target,"RADII",3,dim,radii)
+    [dim,radii] = spiceypy.bodvrd(target,"RADII",3)
 
     spiceypy.unload(METAKR)
     print("radius",radii)
