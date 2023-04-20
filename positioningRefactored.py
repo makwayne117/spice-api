@@ -86,7 +86,7 @@ def return_spacecraft_pos():
     #Add all kernels to spice and compute data for VOYAGER 1 1
     spiceypy.furnsh(kernel_urls)
     target = request.args.get('mission')
-    utctim = request.args.get('utc')
+    utctime = request.args.get('utc')
     length = request.args.get('length')
     obs = "SUN"
     et = spiceypy.str2et(utctime)
