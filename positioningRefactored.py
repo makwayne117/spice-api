@@ -103,7 +103,7 @@ def return_spacecraft_orbit():
     with open('missions.json', 'r') as f:
         missions = json.load(f)
         print("in missions")
-    mission = request.args.get('mission')
+    mission = request.args.get('planet')
     kernel_urls = missions[mission]
     kernel_urls = ["kernels/"+mission +"/"+ x for x in kernel_urls]
     print(kernel_urls)
@@ -112,7 +112,7 @@ def return_spacecraft_orbit():
     kernel_urls.append("kernels/leap.tls")
     #Add all kernels to spice and compute data for VOYAGER 1 1
     spiceypy.furnsh(kernel_urls)
-    target = request.args.get('mission')
+    target = request.args.get('planet')
     utctim = request.args.get('utc')
     length = request.args.get('length')
     obs = "SUN"
