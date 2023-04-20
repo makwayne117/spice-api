@@ -86,13 +86,32 @@ def return_spacecraft_position():
     #Add all kernels to spice and compute data for VOYAGER 1 1
     spiceypy.furnsh(kernel_urls)
     target = request.args.get('mission')
-    utctime = request.args.get('utc')
+    utctim = request.args.get('utc')
+    length = request.args.get('length')
     obs = "SUN"
-    et = spiceypy.str2et(utctime)
-    [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000', 'LT+S', obs)
+    #et = spiceypy.str2et(utctime)
+    #[return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000', 'LT+S', obs)
+    #spiceypy.unload(kernel_urls)
+    #print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]}))
+    #return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]})
+    utctim = utctim[:-1]
+    print("first",utctim)
+    utctim = datetime.datetime.fromisoformat(utctim)
+    print("second",utctim)
+    temp = np.array(utctim.isoformat(),dtype=object)
+    for i in range(int(length)):
+        temp = np.append(temp,(utctim-datetime.timedelta(i)).isoformat())
+    
+    et = np.empty(0)
+    for i in range(0,len(temp)):
+        et = np.append(et,spiceypy.str2et(temp[i]))
+
+    [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000',
+                                          'LT+S', obs, )
+
     spiceypy.unload(kernel_urls)
-    print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]}))
-    return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]})
+    data = [l.tolist() for l in return_pos]
+    return(data)
 
 
 @app.route('/orbits', methods=['GET'])
@@ -109,28 +128,21 @@ def return_position():
     utctim = datetime.datetime.fromisoformat(utctim)
     print(target)
     spiceypy.furnsh(METAKR)
-
-    #testUtc = datetime.datetime.now()
+    #create array of dates
     temp = np.array(utctim.isoformat(),dtype=object)
     for i in range(int(length)):
         temp = np.append(temp,(utctim-datetime.timedelta(i)).isoformat())
-    #print("Temp Times:",temp)
+    
     et = np.empty(0)
     for i in range(0,len(temp)):
         et = np.append(et,spiceypy.str2et(temp[i]))
-    #print("TestEt:", testEt)
-    #print("Shapes",len(temp),len(testEt))
 
     [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000',
                                           'LT+S', obs, )
 
     spiceypy.unload(METAKR)
-    #print("Spice:", return_pos)
     data = [l.tolist() for l in return_pos]
-    #print("List",data)
-    #return (return_pos.tolist())
     return(data)
-    #return (return_pos.tolist())
 
 @app.route('/upload_static_file', methods=['POST'])
 def upload_static_file():
