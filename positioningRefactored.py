@@ -71,6 +71,7 @@ def return_body_position():
 @app.route('/mission', methods=['GET'])
 def return_spacecraft_position():
    # read missions dictionary from the file
+   #
     print("I'm here")
     with open('missions.json', 'r') as f:
         missions = json.load(f)
