@@ -97,48 +97,51 @@ def return_spacecraft_pos():
 
 @app.route('/mission_orbits', methods=['GET'])
 def return_spacecraft_orbit():
-   # read missions dictionary from the file
-   #
-    print("I'm here")
-    with open('missions.json', 'r') as f:
-        missions = json.load(f)
-        print("in missions")
-    mission = request.args.get('planet')
-    kernel_urls = missions[mission]
-    kernel_urls = ["kernels/"+mission +"/"+ x for x in kernel_urls]
-    print(kernel_urls)
+    try:
+        # read missions dictionary from the file
+        #
+        print("I'm here")
+        with open('missions.json', 'r') as f:
+            missions = json.load(f)
+            print("in missions")
+        mission = request.args.get('planet')
+        kernel_urls = missions[mission]
+        kernel_urls = ["kernels/"+mission +"/"+ x for x in kernel_urls]
+        print(kernel_urls)
 
-    #Lets add the leapsecond file to the kernel pool
-    kernel_urls.append("kernels/leap.tls")
-    #Add all kernels to spice and compute data for VOYAGER 1 1
-    spiceypy.furnsh(kernel_urls)
-    target = request.args.get('planet')
-    utctim = request.args.get('utc')
-    length = request.args.get('length')
-    obs = "SUN"
-    #et = spiceypy.str2et(utctime)
-    #[return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000', 'LT+S', obs)
-    #spiceypy.unload(kernel_urls)
-    #print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]}))
-    #return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]})
-    utctim = utctim[:-1]
-    print("first",utctim)
-    utctim = datetime.datetime.fromisoformat(utctim)
-    print("second",utctim)
-    temp = np.array(utctim.isoformat(),dtype=object)
-    for i in range(int(length)):
-        temp = np.append(temp,(utctim-datetime.timedelta(i)).isoformat())
-    
-    et = np.empty(0)
-    for i in range(0,len(temp)):
-        et = np.append(et,spiceypy.str2et(temp[i]))
+        #Lets add the leapsecond file to the kernel pool
+        kernel_urls.append("kernels/leap.tls")
+        #Add all kernels to spice and compute data for VOYAGER 1 1
+        spiceypy.furnsh(kernel_urls)
+        target = request.args.get('planet')
+        utctim = request.args.get('utc')
+        length = request.args.get('length')
+        obs = "SUN"
+        #et = spiceypy.str2et(utctime)
+        #[return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000', 'LT+S', obs)
+        #spiceypy.unload(kernel_urls)
+        #print(jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]}))
+        #return jsonify({"x": return_pos[0], "y": return_pos[1], "z": return_pos[2], "vx": return_pos[3], "vy": return_pos[4], "vz": return_pos[5]})
+        utctim = utctim[:-1]
+        print("first",utctim)
+        utctim = datetime.datetime.fromisoformat(utctim)
+        print("second",utctim)
+        temp = np.array(utctim.isoformat(),dtype=object)
+        for i in range(int(length)):
+            temp = np.append(temp,(utctim-datetime.timedelta(i)).isoformat())
+        
+        et = np.empty(0)
+        for i in range(0,len(temp)):
+            et = np.append(et,spiceypy.str2et(temp[i]))
 
-    [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000',
-                                          'LT+S', obs, )
+        [return_pos, ltime] = spiceypy.spkezr(target, et, 'J2000',
+                                            'LT+S', obs, )
 
-    spiceypy.unload(kernel_urls)
-    data = [l.tolist() for l in return_pos]
-    return(data)
+        spiceypy.unload(kernel_urls)
+        data = [l.tolist() for l in return_pos]
+        return(data)
+        except:
+            print("A Error Occured with SPICE")
 
 
 @app.route('/orbits', methods=['GET'])
